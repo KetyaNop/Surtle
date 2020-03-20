@@ -55,7 +55,38 @@ public class login extends AppCompatActivity {
                 googleButtonClicked();
             }
         });
+        isUserSignedIn();
     }
+
+    private boolean isUserSignedIn(){
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            // User is signed in
+            signInSucessful();
+            return true;
+        } else {
+            // No user is signed in
+            signInFailed();
+            return false;
+        }
+    }
+
+    private void signInSucessful(){
+        Log.d("TAG", "signInWithCredential:success");
+        FirebaseUser user = mAuth.getCurrentUser();
+
+        Intent i = new Intent(getApplicationContext(),MainActivity.class);
+        startActivity(i);
+        finish();
+        Toast.makeText(getApplicationContext(), "User logged in successfully",Toast.LENGTH_SHORT).show();
+    }
+
+    private void signInFailed(){
+        Log.w("TAG", "signInWithCredential:failure");
+        Toast.makeText(getApplicationContext(), "Could not log in",Toast.LENGTH_SHORT).show();
+    }
+
+
 
     public void googleButtonClicked(){
         Toast.makeText(getApplicationContext(), "GoogleSignIn Button Clicked",Toast.LENGTH_SHORT).show();
@@ -97,17 +128,10 @@ public class login extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            Log.d("TAG", "signInWithCredential:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
-
-                            Intent i = new Intent(getApplicationContext(),MainActivity.class);
-                            startActivity(i);
-                            finish();
-                            Toast.makeText(getApplicationContext(), "User logged in successfully",Toast.LENGTH_SHORT).show();
+                           signInSucessful();
                         } else {
                             // If sign in fails, display a message to the user.
-                            Log.w("TAG", "signInWithCredential:failure", task.getException());
-                            Toast.makeText(getApplicationContext(), "Could not log in",Toast.LENGTH_SHORT).show();
+                            signInFailed();
                         }
 
                         // ...
