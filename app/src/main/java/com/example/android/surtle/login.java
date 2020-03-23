@@ -79,14 +79,18 @@ public class login extends AppCompatActivity {
         startActivity(i);
         finish();
         Toast.makeText(getApplicationContext(), "User logged in successfully",Toast.LENGTH_SHORT).show();
+        //update userData to UserInfo Class
+        UserInfo userInfo = (UserInfo) getApplication();
+        userInfo.setUid(user.getUid());
+        userInfo.setEmail(user.getEmail());
+        userInfo.setName(user.getDisplayName());
+        userInfo.setPhotoUrl(user.getPhotoUrl());
     }
 
     private void signInFailed(){
         Log.w("TAG", "signInWithCredential:failure");
         Toast.makeText(getApplicationContext(), "Could not log in",Toast.LENGTH_SHORT).show();
     }
-
-
 
     public void googleButtonClicked(){
         Toast.makeText(getApplicationContext(), "GoogleSignIn Button Clicked",Toast.LENGTH_SHORT).show();
