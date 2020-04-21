@@ -55,7 +55,7 @@ public class login extends AppCompatActivity {
                 googleButtonClicked();
             }
         });
-        isUserSignedIn();
+//        isUserSignedIn();
     }
 
     private boolean isUserSignedIn(){
@@ -71,22 +71,29 @@ public class login extends AppCompatActivity {
         }
     }
 
+
+    //called when firebase confirm that sign in is sucessful
     private void signInSucessful(){
         Log.d("TAG", "signInWithCredential:success");
         FirebaseUser user = mAuth.getCurrentUser();
-
-        Intent i = new Intent(getApplicationContext(),MainActivity.class);
-        startActivity(i);
-        finish();
-        Toast.makeText(getApplicationContext(), "User logged in successfully",Toast.LENGTH_SHORT).show();
         //update userData to UserInfo Class
+        Log.d("UserInfo", user.getUid());
         UserInfo userInfo = (UserInfo) getApplication();
         userInfo.setUid(user.getUid());
         userInfo.setEmail(user.getEmail());
         userInfo.setName(user.getDisplayName());
         userInfo.setPhotoUrl(user.getPhotoUrl());
+        Log.d("UserInfo", userInfo.getUid());
+
+        //start Profile Activity
+        Intent i = new Intent(getApplicationContext(),Profile.class);
+        startActivity(i);
+        finish();
+        Toast.makeText(getApplicationContext(), "User logged in successfully",Toast.LENGTH_SHORT).show();
+
     }
 
+    //called when firebase confirm that sign in failed
     private void signInFailed(){
         Log.w("TAG", "signInWithCredential:failure");
         Toast.makeText(getApplicationContext(), "Could not log in",Toast.LENGTH_SHORT).show();

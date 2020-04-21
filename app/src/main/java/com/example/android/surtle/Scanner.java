@@ -2,6 +2,7 @@ package com.example.android.surtle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,8 +18,9 @@ public class Scanner extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_scanner);
+//        setContentView(R.layout.activity_scanner);
         mScannerView = new ZXingScannerView(this);
+        setContentView(mScannerView);
     }
 
     public void scanButtonClicked(View view){
@@ -42,8 +44,6 @@ public class Scanner extends AppCompatActivity {
         @Override
         public void handleResult(Result rawResult) {
 
-
-
             // Do something with the result here
             Log.d("ScanResult", rawResult.getText()); // Prints scan results
             Log.d("ScanResult", rawResult.getBarcodeFormat().toString()); // Prints the scan format (qrcode, pdf417 etc.)
@@ -52,6 +52,15 @@ public class Scanner extends AppCompatActivity {
 
             // If you would like to resume scanning, call this method below:
     //        mScannerView.resumeCameraPreview(this);*/
+
+            //start Profile Activity with scanResult = [scanResult]
+            Intent i = new Intent(getApplicationContext(), rate.class);
+            i.putExtra("scanResult", rawResult.getText());
+            startActivity(i);
+            finish();
+
+            //access result on next activity with
+            //String result = getIntent().getStringExtra("scanResult");
         }
     }
 
