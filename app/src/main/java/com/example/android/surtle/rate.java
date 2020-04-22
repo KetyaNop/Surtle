@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.github.zagum.switchicon.SwitchIconView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -45,8 +46,8 @@ public class rate extends AppCompatActivity {
 
 
         //getButton Reference
-        Button thumbsDownButton = (Button)findViewById(R.id.thumbsDownButton);
-        Button thumbsUpButton = (Button)findViewById(R.id.thumbsUpButton);
+        final SwitchIconView thumbsDownButton = (SwitchIconView)findViewById(R.id.thumbsDownButton);
+        final SwitchIconView thumbsUpButton = (SwitchIconView)findViewById(R.id.thumbsUpButton);
         Button submitButton = (Button)findViewById(R.id.submitButton);
 
         //setOnClickListener for both buttons
@@ -63,10 +64,9 @@ public class rate extends AppCompatActivity {
             }
         });
 
-
+        //update database when submit button is clicked
         submitButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                //update database when submit button is clicked
                 userVoteRef.setValue(buttonState);
                 finish();
             }
@@ -82,24 +82,29 @@ public class rate extends AppCompatActivity {
 
                 //get products.[productCode].vote and store in Object value
                 Object value = dataSnapshot.getValue();
-                Log.d("productRef", "Value is: " + value.toString());
 
-                //cast Object value to Map<String, Boolean>
-                Map<String, Boolean> map = (Map<String, Boolean>) value;
+                //add null handler
+                if (value != null){
+                    Log.d("productRef", "Value is: " + value.toString());
 
-                // Get keys and values
-                //get total votes and total positive votes
-                int totalVotes = 0;
-                int positiveVotes = 0;
-                for (Map.Entry<String, Boolean> entry : map.entrySet()) {
-                    String k = entry.getKey();
-                    Boolean v = entry.getValue();
-                    Log.d("productRef", "Key: " + k + ", Value: " + v);
-                    totalVotes++; //update number of total vote
-                    if (v)
-                        positiveVotes++; //update number of total positive vote
-                    updateRatingDisplayUI(positiveVotes, totalVotes); //update the UI for displaying the rating
+                    //cast Object value to Map<String, Boolean>
+                    Map<String, Boolean> map = (Map<String, Boolean>) value;
+
+                    // Get keys and values
+                    //get total votes and total positive votes
+                    int totalVotes = 0;
+                    int positiveVotes = 0;
+                    for (Map.Entry<String, Boolean> entry : map.entrySet()) {
+                        String k = entry.getKey();
+                        Boolean v = entry.getValue();
+                        Log.d("productRef", "Key: " + k + ", Value: " + v);
+                        totalVotes++; //update number of total vote
+                        if (v)
+                            positiveVotes++; //update number of total positive vote
+                        updateRatingDisplayUI(positiveVotes, totalVotes); //update the UI for displaying the rating
+                    }
                 }
+
             }
 
             @Override
@@ -112,16 +117,16 @@ public class rate extends AppCompatActivity {
 
     void updateButtonColor(){
         //getButton Reference
-        Button thumbsDownButtond = (Button)findViewById(R.id.thumbsDownButton);
-        Button thumbsUpButtond = (Button)findViewById(R.id.thumbsUpButton);
+        final SwitchIconView thumbsDownButton = (SwitchIconView)findViewById(R.id.thumbsDownButton);
+        final SwitchIconView thumbsUpButton = (SwitchIconView)findViewById(R.id.thumbsUpButton);
 
         Log.d("ButtonColor", buttonState.toString());
         if (buttonState){
-            thumbsDownButtond.setBackgroundColor(Color.WHITE);
-            thumbsUpButtond.setBackgroundColor(Color.BLUE);
+            thumbsUpButton.setIconEnabled(true);
+            thumbsDownButton.setIconEnabled(false);
         }else {
-            thumbsDownButtond.setBackgroundColor(Color.BLUE);
-            thumbsUpButtond.setBackgroundColor(Color.WHITE);
+            thumbsUpButton.setIconEnabled(false);
+            thumbsDownButton.setIconEnabled(true);
         }
     }
 

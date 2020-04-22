@@ -28,8 +28,7 @@
                 android:id="@+id/addImageButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Add Picture
-" />
+                android:text="Add Picture" />
 
         </LinearLayout>
 
@@ -53,20 +52,33 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <Button
+                <com.github.zagum.switchicon.SwitchIconView
                     android:id="@+id/thumbsDownButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="No"
-                    tools:background="#2E0909" />
+                    android:padding="8dp"
+                    app:si_animation_duration="500"
+                    app:si_disabled_alpha=".3"
+                    app:si_disabled_color="#b7b7b7"
+                    app:si_enabled="false"
+                    app:si_no_dash="true"
+                    app:si_tint_color="#ff3c00"
+                    app:srcCompat="@drawable/ic_thumb_down_black_18dp" />
 
-                <Button
+                <com.github.zagum.switchicon.SwitchIconView
                     android:id="@+id/thumbsUpButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="yes" />
+                    android:padding="8dp"
+                    app:si_animation_duration="500"
+                    app:si_disabled_alpha=".3"
+                    app:si_disabled_color="#b7b7b7"
+                    app:si_enabled="false"
+                    app:si_no_dash="true"
+                    app:si_tint_color="#ff3c00"
+                    app:srcCompat="@drawable/ic_thumb_up_black_18dp" />
             </LinearLayout>
 
         </LinearLayout>
