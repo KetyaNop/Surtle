@@ -16,7 +16,8 @@
         <activity android:name=".Profile" />
         <activity android:name=".MainActivity" />
         <activity android:name=".Scanner" />
-        <activity android:name=".login">
+        <activity android:name=".login"
+            android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

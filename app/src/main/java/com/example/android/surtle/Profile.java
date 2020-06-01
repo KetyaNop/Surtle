@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.storage.FirebaseStorage;
+
 
 public class Profile extends AppCompatActivity {
 
@@ -28,6 +30,9 @@ public class Profile extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
+        //firebase media database
+        FirebaseStorage storage = FirebaseStorage.getInstance();
 
     }
 

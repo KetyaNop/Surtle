@@ -3,10 +3,14 @@ package com.example.android.surtle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ActionBar;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -29,12 +33,23 @@ public class login extends AppCompatActivity {
     private static final int RC_SIGN_IN = 101;
     GoogleSignInClient mGoogleSignInClient;
     private FirebaseAuth mAuth;
-    SignInButton signInButton;
+    Button signInButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+//        View decorView = getWindow().getDecorView();
+//        // Hide the status bar.
+//        int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
+//        decorView.setSystemUiVisibility(uiOptions);
+//
+//        //hide status bar
+//        if (Build.VERSION.SDK_INT < 16) {
+//            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+//                    WindowManager.LayoutParams.FLAG_FULLSCREEN);
+//        }
 
         // Configure Google Sign In
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -48,7 +63,7 @@ public class login extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         Toast.makeText(getApplicationContext(), "Initialization Successful",Toast.LENGTH_SHORT).show();
 
-        signInButton = (SignInButton)findViewById(R.id.googleSignInButton);
+        signInButton = (Button) findViewById(R.id.googleSignInButton);
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
