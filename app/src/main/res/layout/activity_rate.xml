@@ -11,52 +11,80 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <LinearLayout
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="2"
-            android:orientation="vertical">
+            android:layout_weight="10">
 
             <ImageView
-                android:id="@+id/productImageView"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:id="@+id/product_image_view"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center_horizontal"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/ic_launcher_background" />
+                android:scaleType="centerCrop"
+                app:srcCompat="@drawable/product_placeholder" />
 
-            <Button
-                android:id="@+id/addImageButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Add Picture" />
+        </FrameLayout>
 
-        </LinearLayout>
+        <FrameLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-25dp"
+            android:translationZ="1dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_gravity="right"
+                android:layout_marginTop="0dp"
+                android:orientation="horizontal"
+                android:translationZ="1dp">
+
+                <TextView
+                    android:id="@+id/ratingTextView"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="12dp"
+                    android:background="@drawable/button_rounded_corners_background"
+                    android:gravity="center"
+                    android:text="40%"
+                    android:textColor="@android:color/white" />
+
+                <Button
+                    android:id="@+id/add_image_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_gravity="end"
+                    android:layout_marginRight="18dp"
+                    android:text="Add Picture" />
+
+            </LinearLayout>
+        </FrameLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_marginTop="-25dp"
+            android:layout_weight="20"
+            android:background="@android:color/darker_gray"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/ratingTextView"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:text="loading....."
-                android:textAlignment="center" />
-
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="18dp"
+                android:background="@android:color/white"
+                android:gravity="center_vertical"
                 android:orientation="horizontal">
 
                 <com.github.zagum.switchicon.SwitchIconView
                     android:id="@+id/thumbsDownButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight=" 1"
                     android:padding="8dp"
                     app:si_animation_duration="500"
                     app:si_disabled_alpha=".3"
@@ -79,23 +107,132 @@
                     app:si_no_dash="true"
                     app:si_tint_color="#ff3c00"
                     app:srcCompat="@drawable/ic_thumb_up_black_18dp" />
+
             </LinearLayout>
 
-        </LinearLayout>
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="300dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/card_border"
+                android:orientation="vertical"
+                tools:layout_marginTop="18dp">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:id="@+id/textView6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="18dp"
+                        android:layout_marginRight="8dp"
+                        android:text="Similar Products"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp" />
+
+                    <Button
+                        android:id="@+id/submitButton"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_toRightOf="@id/textView6"
+                        android:background="@drawable/button_border"
+                        android:drawableLeft="@drawable/ic_add_black_18dp"
+                        android:drawablePadding="30dp"
+                        android:paddingLeft="6dp"
+                        android:textSize="36sp" />
+                </LinearLayout>
+
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp">
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:background="@android:color/white"
+                        android:orientation="horizontal">
+                        <!-- Content here -->
+                        <FrameLayout
+                            android:layout_width="200dp"
+                            android:layout_height="200dp"
+                            android:background="@android:color/white">
+
+                            <ImageView
+                                android:layout_width="190dp"
+                                android:layout_height="190dp"
+                                android:layout_gravity="center_vertical|center_horizontal"
+                                android:padding="6dp"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/product_placeholder" />
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:src="@drawable/frame" />
+
+                        </FrameLayout>
+
+                        <FrameLayout
+                            android:layout_width="200dp"
+                            android:layout_height="200dp"
+                            android:background="@android:color/white">
+
+                            <ImageView
+                                android:layout_width="190dp"
+                                android:layout_height="190dp"
+                                android:layout_gravity="center_vertical|center_horizontal"
+                                android:padding="6dp"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/product_placeholder" />
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:src="@drawable/frame" />
+
+                        </FrameLayout>
+
+                        <FrameLayout
+                            android:layout_width="200dp"
+                            android:layout_height="200dp"
+                            android:background="@android:color/white">
+
+                            <ImageView
+                                android:layout_width="190dp"
+                                android:layout_height="190dp"
+                                android:layout_gravity="center_vertical|center_horizontal"
+                                android:padding="6dp"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/product_placeholder" />
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:src="@drawable/frame" />
+
+                        </FrameLayout>
+
+                    </LinearLayout>
+
+                </HorizontalScrollView>
+
+            </LinearLayout>
 
             <Button
-                android:id="@+id/submitButton"
+                android:id="@+id/button"
                 android:layout_width="match_parent"
-                android:layout_height="86dp"
-                android:layout_centerVertical="true"
-                android:text="Submit" />
-        </RelativeLayout>
+                android:layout_height="wrap_content"
+                android:text="Scan Similar Products" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

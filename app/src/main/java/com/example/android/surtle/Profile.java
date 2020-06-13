@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
 
 
@@ -33,6 +34,16 @@ public class Profile extends AppCompatActivity {
 
         //firebase media database
         FirebaseStorage storage = FirebaseStorage.getInstance();
+
+        //get sign_out_button reference
+        Button sign_out_button = (Button) findViewById(R.id.sign_out_button);
+        sign_out_button.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                FirebaseAuth.getInstance().signOut();
+                //end this activity
+                finish();
+            }
+        });
 
     }
 

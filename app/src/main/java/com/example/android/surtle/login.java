@@ -70,7 +70,12 @@ public class login extends AppCompatActivity {
                 googleButtonClicked();
             }
         });
-//        isUserSignedIn();
+
+        //check if user is already signed in
+        if (isUserSignedIn()) {
+            //call signInSuccessful method
+            signInSucessful();
+        }
     }
 
     private boolean isUserSignedIn(){
