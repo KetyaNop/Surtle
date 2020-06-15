@@ -48,6 +48,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginRight="12dp"
                     android:background="@drawable/button_rounded_corners_background"
+                    android:backgroundTint="@color/colorPrimary"
                     android:gravity="center"
                     android:text="40%"
                     android:textColor="@android:color/white" />
@@ -58,6 +59,7 @@
                     android:layout_height="fill_parent"
                     android:layout_gravity="end"
                     android:layout_marginRight="18dp"
+                    android:backgroundTint="@color/colorPrimaryDark"
                     android:text="Add Picture" />
 
             </LinearLayout>
@@ -68,46 +70,51 @@
             android:layout_height="0dp"
             android:layout_marginTop="-25dp"
             android:layout_weight="20"
-            android:background="@android:color/darker_gray"
+            android:background="@android:color/white"
             android:orientation="vertical">
 
             <LinearLayout
-                android:layout_width="100dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="18dp"
-                android:background="@android:color/white"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:translationZ="5dp">
 
-                <com.github.zagum.switchicon.SwitchIconView
-                    android:id="@+id/thumbsDownButton"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight=" 1"
-                    android:padding="8dp"
-                    app:si_animation_duration="500"
-                    app:si_disabled_alpha=".3"
-                    app:si_disabled_color="#b7b7b7"
-                    app:si_enabled="false"
-                    app:si_no_dash="true"
-                    app:si_tint_color="#ff3c00"
-                    app:srcCompat="@drawable/ic_thumb_down_black_18dp" />
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="18dp"
+                    android:background="@android:color/white"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
-                <com.github.zagum.switchicon.SwitchIconView
-                    android:id="@+id/thumbsUpButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:padding="8dp"
-                    app:si_animation_duration="500"
-                    app:si_disabled_alpha=".3"
-                    app:si_disabled_color="#b7b7b7"
-                    app:si_enabled="false"
-                    app:si_no_dash="true"
-                    app:si_tint_color="#ff3c00"
-                    app:srcCompat="@drawable/ic_thumb_up_black_18dp" />
+                    <com.github.zagum.switchicon.SwitchIconView
+                        android:id="@+id/thumbsDownButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp"
+                        app:si_animation_duration="500"
+                        app:si_disabled_alpha=".3"
+                        app:si_disabled_color="#b7b7b7"
+                        app:si_enabled="false"
+                        app:si_no_dash="true"
+                        app:si_tint_color="@color/colorAccent"
+                        app:srcCompat="@drawable/ic_thumb_down_black_18dp" />
 
+                    <com.github.zagum.switchicon.SwitchIconView
+                        android:id="@+id/thumbsUpButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp"
+                        app:si_animation_duration="500"
+                        app:si_disabled_alpha=".3"
+                        app:si_disabled_color="#b7b7b7"
+                        app:si_enabled="false"
+                        app:si_no_dash="true"
+                        app:si_tint_color="@color/colorAccent"
+                        app:srcCompat="@drawable/ic_thumb_up_black_18dp" />
+
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
@@ -137,7 +144,7 @@
                         android:textSize="18sp" />
 
                     <Button
-                        android:id="@+id/submitButton"
+                        android:id="@+id/add_alternative_button"
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:layout_gravity="center_vertical"
@@ -225,12 +232,6 @@
                 </HorizontalScrollView>
 
             </LinearLayout>
-
-            <Button
-                android:id="@+id/button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Scan Similar Products" />
 
         </LinearLayout>
 

@@ -58,8 +58,13 @@ public class Scanner extends AppCompatActivity {
             // If you would like to resume scanning, call this method below:
     //        mScannerView.resumeCameraPreview(this);*/
 
+            //check if there is a code sent over
+            //get Product Code
+            String productCode = getIntent().getStringExtra("productCode");
+
             //start Profile Activity with scanResult = [scanResult]
             Intent i = new Intent(getApplicationContext(), rate.class);
+            i.putExtra("alternative_product_code", productCode);
             i.putExtra("scanResult", rawResult.getText());
             startActivity(i);
             finish();
