@@ -1,8 +1,5 @@
 package com.example.android.surtle;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -13,6 +10,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.github.zagum.switchicon.SwitchIconView;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -69,38 +69,12 @@ public class rate extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
-                String value = dataSnapshot.getValue(String.class);
-                if (value != null){
-                    //download file
-                    StorageReference fileRef = rootStorageRef.child(value);
-                    File localFile = null;
-                    try {
-                        localFile = File.createTempFile("images", "jpg");
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    final File finalLocalFile = localFile;
+                String imageFileNameValue = dataSnapshot.getValue(String.class);
 
-                    fileRef.getFile(localFile)
-                            .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-                                @Override
-                                public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                                    // Successfully downloaded data to local file
-                                    // break image to bitMap
-                                    Bitmap myBitmap = BitmapFactory.decodeFile(finalLocalFile.getAbsolutePath());
-                                    product_imageView.setImageBitmap(myBitmap);
-                                    // hide add image button
-                                    Button add_image_button = (Button)findViewById(R.id.add_image_button);
-                                    add_image_button.setVisibility(View.GONE);
-                                }
-                            }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception exception) {
-                            // Handle failed download
-                            // ...
-                        }
-                    });
-                }
+                getImage(imageFileNameValue, "cover_image", product_imageView);
+                // hide add image button
+                Button add_image_button = (Button)findViewById(R.id.add_image_button);
+                add_image_button.setVisibility(View.GONE);
             }
 
             @Override
@@ -213,8 +187,73 @@ public class rate extends AppCompatActivity {
             }
         });
 
+        //initialize alternative list
         //add alternative products to the ui
         //loop though products.[Product Code].alternative
+        productRef.child("alternative").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+
+                //get products.[productCode].vote and store in Object value
+                Object value = dataSnapshot.getValue();
+
+                //add null handler
+                if (value != null){
+                    Log.d("alternative display", "Value is: " + value.toString());
+
+                    //cast Object value to Map<String, Boolean>
+                    Map<String, String> map = (Map<String, String>) value;
+                    Log.d("alternative display", "Value is: " + map.toString());
+
+                    // Get keys
+                    int displayId = 1;
+                    //get reference to all display id
+                    final ImageView image_display_id_1 = (ImageView) findViewById(R.id.alt_display_id_1);
+                    ImageView image_display_id_2 = (ImageView) findViewById(R.id.alt_display_id_2);
+                    ImageView image_display_id_3 = (ImageView) findViewById(R.id.alt_display_id_3);
+
+                    ImageView image_rate_display_id_1 = (ImageView) findViewById(R.id.alt_rate_display_id_1);
+                    ImageView image_rate_display_id_2 = (ImageView) findViewById(R.id.alt_rate_display_id_2);
+                    ImageView image_rate_display_id_3 = (ImageView) findViewById(R.id.alt_rate_display_id_3);
+
+                    for (Map.Entry<String, String> entry : map.entrySet()) {
+                        String k = entry.getKey();
+//                        String v = entry.getValue();
+                        Log.d("alternative display", "Key: " + k);
+                        //get reference to alternative image + rate data
+                        if (displayId == 1){
+                            //get image file name for //barcode
+                            DatabaseReference imageFileNameRef = database.getReference("products").child(k).child("imageFileName");
+                            // Read from the database
+                            imageFileNameRef.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    // This method is called once with the initial value and again
+                                    // whenever data at this location is updated.
+                                    String value = dataSnapshot.getValue(String.class);
+                                    getImage(value, "cover_image", image_display_id_1);
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError error) {
+                                    // Failed to read value
+                                    Log.w("Image_File_Name", "Failed to read value.", error.toException());
+                                }
+                            });
+                        }
+                        displayId++;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w("productRef", "Failed to read value.", error.toException());
+            }
+        });
 
     }
 
@@ -298,4 +337,65 @@ public class rate extends AppCompatActivity {
         TextView ratingTextView = (TextView)findViewById(R.id.ratingTextView);
         ratingTextView.setText(Integer.toString(numPosVotes)+"/"+ Integer.toString(totalVotes));
     }
+
+    //@param
+    //filename to acquire eg. 8846014310108/JPEG_20200615_205822_.jpg
+    //returnFileName eg. image1 returns image1.jpg
+    //@return
+    //File containing .jpg
+    File getImage (final String fileName, final String returnFileName, final ImageView imageViewToUpdate ){
+
+        //download file
+        Log.d("storage", "acquiring image file: "+fileName);
+        StorageReference fileRef = rootStorageRef.child(fileName);
+        File localFile = null;
+        try {
+            localFile = File.createTempFile(returnFileName, "jpg");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        final File finalLocalFile = localFile;
+
+        fileRef.getFile(localFile)
+                .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                        // Successfully downloaded data to local file
+                        // break image to bitMap
+                        Log.d("storage", "successfully downloaded, uploading file to: "+returnFileName+".jpg");
+                        Log.d("storage", "Updating Image View");
+                        Bitmap myBitmap = BitmapFactory.decodeFile(finalLocalFile.getAbsolutePath());
+                        imageViewToUpdate.setImageBitmap(myBitmap);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle failed download
+                return;
+                // ...
+            }
+        });
+
+        return finalLocalFile;
+    }
+
+//    String getImageFileName(String barCode){
+//        DatabaseReference imageFileNameRef = database.getReference("products").child(barCode).child("imageFileName");
+//        // Read from the database
+//        String returnValue;
+//        imageFileNameRef.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                // This method is called once with the initial value and again
+//                // whenever data at this location is updated.
+//                String value = dataSnapshot.getValue(String.class);
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError error) {
+//                // Failed to read value
+//                Log.w("Image_File_Name", "Failed to read value.", error.toException());
+//            }
+//        });
+//    }
 }

@@ -1,0 +1,31 @@
+<FrameLayout android:layout_width="200dp"
+    android:layout_height="200dp"
+    android:background="@android:color/white"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ImageView
+        android:layout_width="190dp"
+        android:layout_height="190dp"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:padding="6dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/product_placeholder" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/frame" />
+
+    <TextView
+        android:id="@+id/ratingTextView3"
+        android:layout_width="40dp"
+        android:layout_height="32dp"
+        android:layout_gravity="right|bottom"
+        android:layout_marginRight="12dp"
+        android:background="@drawable/button_border"
+        android:backgroundTint="@color/colorPrimary"
+        android:gravity="center"
+        android:text="40%"
+        android:textColor="@android:color/white" />
+
+</FrameLayout>
