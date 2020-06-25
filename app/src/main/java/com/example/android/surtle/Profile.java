@@ -27,13 +27,14 @@ public class Profile extends AppCompatActivity {
         Button button = (Button) findViewById(R.id.scanButton);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-//                Intent i = new Intent(getApplicationContext(),Scanner.class);
-//                startActivity(i);
+                Boolean test = false;
+                Intent i = new Intent(getApplicationContext(),Scanner.class);
 
-                //start rate Activity with preset scan result
-                Intent i = new Intent(getApplicationContext(), rate.class);
-//                i.putExtra("alternative_product_code", productCode);
-                i.putExtra("scanResult", "8901057510028");
+                if (test){
+                    //start rate Activity with preset scan result
+                    i = new Intent(getApplicationContext(), rate.class);
+                    i.putExtra("scanResult", "8901057510028");
+                }
                 startActivity(i);
                 finish();
             }
