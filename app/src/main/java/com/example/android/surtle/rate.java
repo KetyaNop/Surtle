@@ -50,14 +50,14 @@ public class rate extends AppCompatActivity {
 
         //getUserID
         UserInfo userInfo = (UserInfo) this.getApplication();
-        String UID = userInfo.getUid();
+        final String UID = userInfo.getUid();
 
         //get Product Code
-        String productCode = getIntent().getStringExtra("scanResult");
+        final String productCode = getIntent().getStringExtra("scanResult");
         pCode = productCode;
 
         //get alternative product code
-        String alternative_product_code = getIntent().getStringExtra("alternative_product_code");
+        final String alternative_product_code = getIntent().getStringExtra("alternative_product_code");
 
         //get product_imageView reference
         final ImageView product_imageView = (ImageView) findViewById(R.id.product_image_view);
@@ -100,6 +100,74 @@ public class rate extends AppCompatActivity {
             //add product key to alternative_product branch
             final DatabaseReference alternative_product_databaseRef = database.getReference("products").child(alternative_product_code);
             alternative_product_databaseRef.child("alternative").child(productCode).child(UID).setValue(true);
+
+            //loop through current product code's alternatives and update alternative_product_code's alternatives
+            DatabaseReference currentProductCodeAlternativeRef = database.getReference("products").child(pCode).child("alternative");
+            currentProductCodeAlternativeRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    // This method is called once with the initial value and again
+                    //get products.[productCode].vote and store in Object value
+                    Object value = dataSnapshot.getValue();
+
+                    //add null handler
+                    if (value != null){
+                        Log.d("alternative_list", "Value is: " + value.toString());
+
+                        //cast Object value to Map<String, Boolean>
+                        Map<String, String> map = (Map<String, String>) value;
+
+                        // Get keys and values
+                        for (Map.Entry<String, String> entry : map.entrySet()) {
+                            String k = entry.getKey();
+                            if (k.equals(alternative_product_code) == false){
+                                alternative_product_databaseRef.child("alternative").child(k).child(UID).setValue(true);
+                            }
+                            Log.d("alternative_list", "Key: " + k);
+
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError error) {
+                    // Failed to read value
+                    Log.w("alternative_list", "Failed to read value.", error.toException());
+                }
+            });
+
+            //loop through alternative_product_code's alternatives and update current product code's alternatives
+            alternative_product_databaseRef.child("alternative").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    // This method is called once with the initial value and again
+                    //get products.[productCode].vote and store in Object value
+                    Object value = dataSnapshot.getValue();
+
+                    //add null handler
+                    if (value != null){
+                        Log.d("alternative_list", "Value is: " + value.toString());
+
+                        //cast Object value to Map<String, Boolean>
+                        Map<String, String> map = (Map<String, String>) value;
+
+                        // Get keys and values
+                        for (Map.Entry<String, String> entry : map.entrySet()) {
+                            String k = entry.getKey();
+                            Log.d("alternative_list", "Key: " + k);
+                            if (k.equals(pCode) == false){
+                                productRef.child("alternative").child(k).child(UID).setValue(true);
+                            }
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError error) {
+                    // Failed to read value
+                    Log.w("alternative_list", "Failed to read value.", error.toException());
+                }
+            });
         }
 
         //getButton Reference
@@ -214,12 +282,12 @@ public class rate extends AppCompatActivity {
                     int displayId = 1;
                     //get reference to all display id
                     final ImageView image_display_id_1 = (ImageView) findViewById(R.id.alt_display_id_1);
-                    ImageView image_display_id_2 = (ImageView) findViewById(R.id.alt_display_id_2);
-                    ImageView image_display_id_3 = (ImageView) findViewById(R.id.alt_display_id_3);
+                    final ImageView image_display_id_2 = (ImageView) findViewById(R.id.alt_display_id_2);
+                    final ImageView image_display_id_3 = (ImageView) findViewById(R.id.alt_display_id_3);
 
-                    ImageView image_rate_display_id_1 = (ImageView) findViewById(R.id.alt_rate_display_id_1);
-                    ImageView image_rate_display_id_2 = (ImageView) findViewById(R.id.alt_rate_display_id_2);
-                    ImageView image_rate_display_id_3 = (ImageView) findViewById(R.id.alt_rate_display_id_3);
+                    final ImageView image_rate_display_id_1 = (ImageView) findViewById(R.id.alt_rate_display_id_1);
+                    final ImageView image_rate_display_id_2 = (ImageView) findViewById(R.id.alt_rate_display_id_2);
+                    final ImageView image_rate_display_id_3 = (ImageView) findViewById(R.id.alt_rate_display_id_3);
 
                     for (Map.Entry<String, String> entry : map.entrySet()) {
                         String k = entry.getKey();
@@ -261,7 +329,7 @@ public class rate extends AppCompatActivity {
                                         return;
                                     }
                                     String value = dataSnapshot.getValue(String.class);
-                                    getImage(value, "alt_image_2", image_display_id_1);
+                                    getImage(value, "alt_image_2", image_display_id_2);
                                 }
 
                                 @Override
@@ -283,7 +351,7 @@ public class rate extends AppCompatActivity {
                                         return;
                                     }
                                     String value = dataSnapshot.getValue(String.class);
-                                    getImage(value, "alt_image_3", image_display_id_1);
+                                    getImage(value, "alt_image_3", image_display_id_3);
                                 }
 
                                 @Override
