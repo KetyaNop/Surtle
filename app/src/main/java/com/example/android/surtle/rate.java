@@ -235,6 +235,9 @@ public class rate extends AppCompatActivity {
                                 public void onDataChange(DataSnapshot dataSnapshot) {
                                     // This method is called once with the initial value and again
                                     // whenever data at this location is updated.
+                                    if(dataSnapshot.getValue(String.class) == null){
+                                        return;
+                                    }
                                     String value = dataSnapshot.getValue(String.class);
                                     getImage(value, "alt_image_1", image_display_id_1);
                                 }
@@ -254,6 +257,9 @@ public class rate extends AppCompatActivity {
                                 public void onDataChange(DataSnapshot dataSnapshot) {
                                     // This method is called once with the initial value and again
                                     // whenever data at this location is updated.
+                                    if(dataSnapshot.getValue(String.class) == null){
+                                        return;
+                                    }
                                     String value = dataSnapshot.getValue(String.class);
                                     getImage(value, "alt_image_2", image_display_id_1);
                                 }
@@ -273,6 +279,9 @@ public class rate extends AppCompatActivity {
                                 public void onDataChange(DataSnapshot dataSnapshot) {
                                     // This method is called once with the initial value and again
                                     // whenever data at this location is updated.
+                                    if(dataSnapshot.getValue(String.class) == null){
+                                        return;
+                                    }
                                     String value = dataSnapshot.getValue(String.class);
                                     getImage(value, "alt_image_3", image_display_id_1);
                                 }
