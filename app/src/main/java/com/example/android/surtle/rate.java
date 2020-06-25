@@ -69,6 +69,9 @@ public class rate extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
+                if (dataSnapshot.getValue(String.class) == null){
+                    return;
+                }
                 String imageFileNameValue = dataSnapshot.getValue(String.class);
 
                 getImage(imageFileNameValue, "cover_image", product_imageView);
