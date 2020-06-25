@@ -233,7 +233,45 @@ public class rate extends AppCompatActivity {
                                     // This method is called once with the initial value and again
                                     // whenever data at this location is updated.
                                     String value = dataSnapshot.getValue(String.class);
-                                    getImage(value, "cover_image", image_display_id_1);
+                                    getImage(value, "alt_image_1", image_display_id_1);
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError error) {
+                                    // Failed to read value
+                                    Log.w("Image_File_Name", "Failed to read value.", error.toException());
+                                }
+                            });
+                        }else if (displayId == 2){
+                            //get image file name for //barcode
+                            DatabaseReference imageFileNameRef = database.getReference("products").child(k).child("imageFileName");
+                            // Read from the database
+                            imageFileNameRef.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    // This method is called once with the initial value and again
+                                    // whenever data at this location is updated.
+                                    String value = dataSnapshot.getValue(String.class);
+                                    getImage(value, "alt_image_2", image_display_id_1);
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError error) {
+                                    // Failed to read value
+                                    Log.w("Image_File_Name", "Failed to read value.", error.toException());
+                                }
+                            });
+                        }else if (displayId == 3){
+                            //get image file name for //barcode
+                            DatabaseReference imageFileNameRef = database.getReference("products").child(k).child("imageFileName");
+                            // Read from the database
+                            imageFileNameRef.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    // This method is called once with the initial value and again
+                                    // whenever data at this location is updated.
+                                    String value = dataSnapshot.getValue(String.class);
+                                    getImage(value, "alt_image_3", image_display_id_1);
                                 }
 
                                 @Override
