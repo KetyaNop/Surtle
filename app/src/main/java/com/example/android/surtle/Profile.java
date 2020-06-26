@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -48,8 +49,14 @@ public class Profile extends AppCompatActivity {
         sign_out_button.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 FirebaseAuth.getInstance().signOut();
-                //end this activity
-                finish();
+                if (FirebaseAuth.getInstance().getUid() == null){
+                    Log.d("session", "logged user out sucessfully");
+                    //end this activity
+                    finish();
+                }else{
+                    Log.d("session", "failed to log out");
+                }
+
             }
         });
 
