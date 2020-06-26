@@ -73,8 +73,6 @@ public class login extends AppCompatActivity {
 
         //check if user is already signed in
         if (isUserSignedIn()) {
-            //call signInSuccessful method
-            signInSucessful();
         }
     }
 
@@ -94,7 +92,6 @@ public class login extends AppCompatActivity {
 
     //called when firebase confirm that sign in is sucessful
     private void signInSucessful(){
-        Log.d("TAG", "signInWithCredential:success");
         FirebaseUser user = mAuth.getCurrentUser();
         //update userData to UserInfo Class
         Log.d("UserInfo", user.getUid());
@@ -106,6 +103,8 @@ public class login extends AppCompatActivity {
         Log.d("UserInfo", userInfo.getUid());
 
         //start Profile Activity
+        Log.d("session", "logged in sucessfully");
+        Log.d("session", "starting profile activity");
         Intent i = new Intent(getApplicationContext(),Profile.class);
         startActivity(i);
         finish();
