@@ -54,6 +54,7 @@ public class rate extends AppCompatActivity {
 
         //get Product Code
         final String productCode = getIntent().getStringExtra("scanResult");
+        Log.d("initalization", "product code: "+productCode);
         pCode = productCode;
 
         //get alternative product code
@@ -87,7 +88,7 @@ public class rate extends AppCompatActivity {
             }
         });
 
-        Log.d("Initialization", "UID: " + UID + ", userInfo: " + userInfo+", productCode: "+productCode);
+        Log.d("INITIALIZATION", "UID: " + UID + ", userInfo: " + userInfo+", productCode: "+productCode);
 
         //get productReference
         final DatabaseReference productRef = database.getReference("products").child(productCode);
@@ -290,7 +291,7 @@ public class rate extends AppCompatActivity {
                     final ImageView image_rate_display_id_3 = (ImageView) findViewById(R.id.alt_rate_display_id_3);
 
                     for (Map.Entry<String, String> entry : map.entrySet()) {
-                        String k = entry.getKey();
+                        final String k = entry.getKey();
 //                        String v = entry.getValue();
                         Log.d("alternative display", "Key: " + k);
                         //get reference to alternative image + rate data
@@ -308,6 +309,17 @@ public class rate extends AppCompatActivity {
                                     }
                                     String value = dataSnapshot.getValue(String.class);
                                     getImage(value, "alt_image_1", image_display_id_1);
+
+                                    image_display_id_1.setOnClickListener(new View.OnClickListener(){
+                                        public void onClick(View v){
+                                            //start rate intent with image_display_id_3 product barcode id
+//                                            Log.d("", "add alternative button clicked");
+//                                            Log.d("add_alternative", "starting scanner");
+                                            Intent i = new Intent(getApplicationContext(), rate.class);
+                                            i.putExtra("scanResult", k);
+                                            startActivity(i);
+                                        }
+                                    });
                                 }
 
                                 @Override
@@ -330,6 +342,17 @@ public class rate extends AppCompatActivity {
                                     }
                                     String value = dataSnapshot.getValue(String.class);
                                     getImage(value, "alt_image_2", image_display_id_2);
+
+                                    image_display_id_2.setOnClickListener(new View.OnClickListener(){
+                                        public void onClick(View v){
+                                            //start rate intent with image_display_id_3 product barcode id
+//                                            Log.d("", "add alternative button clicked");
+//                                            Log.d("add_alternative", "starting scanner");
+                                            Intent i = new Intent(getApplicationContext(), rate.class);
+                                            i.putExtra("scanResult", k);
+                                            startActivity(i);
+                                        }
+                                    });
                                 }
 
                                 @Override
@@ -352,6 +375,17 @@ public class rate extends AppCompatActivity {
                                     }
                                     String value = dataSnapshot.getValue(String.class);
                                     getImage(value, "alt_image_3", image_display_id_3);
+
+                                    image_display_id_3.setOnClickListener(new View.OnClickListener(){
+                                        public void onClick(View v){
+                                            //start rate intent with image_display_id_3 product barcode id
+//                                            Log.d("", "add alternative button clicked");
+//                                            Log.d("add_alternative", "starting scanner");
+                                            Intent i = new Intent(getApplicationContext(), rate.class);
+                                            i.putExtra("scanResult", k);
+                                            startActivity(i);
+                                        }
+                                    });
                                 }
 
                                 @Override
@@ -372,7 +406,6 @@ public class rate extends AppCompatActivity {
                 Log.w("productRef", "Failed to read value.", error.toException());
             }
         });
-
     }
 
     private void dispatchTakePictureIntent() {
